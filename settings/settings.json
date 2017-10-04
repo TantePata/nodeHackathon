@@ -1,0 +1,12 @@
+{
+  "port":3000,
+  "db": {
+    "host"     : "vps428029.ovh.net",
+    "user"     : "root",
+    "password" : "je suis une licorne",
+    "database" : "hackathon"
+  },
+  "security":{
+    "salt": "Eno4fna$01"
+  }
+}
