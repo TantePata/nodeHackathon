@@ -1,6 +1,6 @@
 module.exports = (api) => {
 
-    const Subject = api.models.User;
+    const Subject = api.models.Subject;
 
     function create(req, res, next) {
 
