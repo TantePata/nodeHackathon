@@ -12,15 +12,6 @@ GET / POST / PUT / DELETE :
         type_parent
     }
 
-/classe
-
-    {
-        id,
-        promo,
-        years,
-        speciality,
-    }
-
  /exercises
 
          {
@@ -80,4 +71,22 @@ GET / POST / PUT / DELETE :
 GET
 
 /users
-/classes
+
+    {
+        id,
+        name,
+        surname,
+        role,
+        mail,
+        password
+    }
+
+
+/classe
+
+    {
+        id,
+        promo,
+        years,
+        speciality,
+    }
