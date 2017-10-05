@@ -46,7 +46,7 @@ module.exports = (api) => {
 
         Subject.findAll({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(anotherTask) {
             if(anotherTask[0] == null){

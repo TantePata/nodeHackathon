@@ -28,11 +28,27 @@ module.exports = (api) => {
         });
     }
 
+    function findBySubject(req, res, next) {
+
+        Lesson.findAll({
+            where: {
+                id_subject: req.params.idSub
+            }
+        }).then(function(anotherTask) {
+            if(anotherTask[0] == null){
+                return res.status(204).send(anotherTask)
+            }
+            return res.send(anotherTask);
+        }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+    }
+
     function findOne(req, res, next) {
 
         Lesson.findAll({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(anotherTask) {
             if(anotherTask[0] == null){
@@ -85,6 +101,7 @@ module.exports = (api) => {
     return {
         create,
         findAll,
+        findBySubject,
         findOne,
         update,
         destroy

@@ -5,7 +5,7 @@ module.exports = (api) => {
     api.actions.lessons.findAll);
 
     router.get('/:id',
-    api.actions.lessons.findOne);
+        api.actions.lessons.findOne);
 
     router.post('/',
     api.middlewares.bodyParser.json(),

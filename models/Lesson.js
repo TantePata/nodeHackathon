@@ -8,13 +8,10 @@ module.exports = (api) => {
             autoIncrement: true,
             primaryKey: true,
         },
-        libelle: {
-            type: Sequelize.STRING,
-        },
-        id_user: {
+        id_subject: {
             type: Sequelize.INTEGER,
         },
-        type_parent: {
+        libelle: {
             type: Sequelize.STRING,
         }
     });

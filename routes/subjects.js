@@ -4,6 +4,9 @@ module.exports = (api) => {
     router.get('/',
     api.actions.subjects.findAll);
 
+    router.get('/:idSub/lesson',
+        api.actions.lessons.findBySubject);
+
     router.get('/:id',
     api.actions.subjects.findOne);
 
