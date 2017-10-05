@@ -46,7 +46,7 @@ module.exports = (api) => {
 
     function update(req, res, next) {
         Video
-            .find({ where: { login: req.params.login} })
+            .find({ where: { id: req.params.id} })
             .then(function(user) {
                 // Check if record exists in db
                 if (!user) {
@@ -66,7 +66,7 @@ module.exports = (api) => {
     function destroy(req, res, next) {
         Video.destroy({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(user) {
             return res.send(user);

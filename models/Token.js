@@ -1,8 +1,8 @@
 var Sequelize = require('sequelize');
 
 module.exports = (api) => {
-
-    return api.mysql.define('token', {
+// TODO crée la table !
+    return api.mysql.define('Token', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,

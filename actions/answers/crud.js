@@ -32,7 +32,7 @@ module.exports = (api) => {
 
         Answer.findAll({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(anotherTask) {
             if(anotherTask[0] == null){
@@ -47,13 +47,13 @@ module.exports = (api) => {
 
     function update(req, res, next) {
         Answer
-            .find({ where: { login: req.params.login} })
-            .then(function(user) {
+            .find({ where: { id: req.params.id} })
+            .then(function(answer) {
                 // Check if record exists in db
-                if (!user) {
-                    return res.status(204).send(anotherTask);
+                if (!answer) {
+                    return res.status(204).send('??');
                 }
-                user
+                answer
                     .updateAttributes(req.body)
                     .then(function (updated) {
                         return res.send(updated);
@@ -67,10 +67,10 @@ module.exports = (api) => {
     function destroy(req, res, next) {
         Answer.destroy({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
-        }).then(function(user) {
-            return res.send(user);
+        }).then(function() {
+            return res.send();
         }).catch(function(error) {
             return res.status(500).send(error)
         });

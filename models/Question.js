@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 
 module.exports = (api) => {
 
-    return api.mysql.define('question', {
+    return api.mysql.define('Question', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,

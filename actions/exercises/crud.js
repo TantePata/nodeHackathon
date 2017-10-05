@@ -33,7 +33,7 @@ module.exports = (api) => {
 
         Exercise.findAll({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(anotherTask) {
             if(anotherTask[0] == null){
@@ -48,7 +48,7 @@ module.exports = (api) => {
 
     function update(req, res, next) {
         Exercise
-            .find({ where: { login: req.params.login} })
+            .find({ where: { login: req.params.id} })
             .then(function(user) {
                 // Check if record exists in db
                 if (!user) {
@@ -68,7 +68,7 @@ module.exports = (api) => {
     function destroy(req, res, next) {
         Exercise.destroy({
             where: {
-                login: req.params.login
+                id: req.params.id
             }
         }).then(function(user) {
             return res.send(user);
