@@ -1,28 +1,33 @@
 var Sequelize = require('sequelize');
-const sha1 = require('sha1');
 
 module.exports = (api) => {
 
-    return api.mysql.define('User', {
+    return api.mysql.define('exercise', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
+        content: {
             type: Sequelize.STRING,
         },
-        surname: {
+        descriptions: {
             type: Sequelize.STRING,
         },
-        role: {
+        title: {
             type: Sequelize.STRING,
         },
-        mail: {
+        link: {
             type: Sequelize.STRING,
         },
-        password: {
-            type: Sequelize.STRING,
+        favorite: {
+            type: Sequelize.BOOLEAN,
+        },
+        id_user: {
+            type: Sequelize.INTEGER,
+        },
+        id_lesson: {
+            type: Sequelize.INTEGER,
         }
     });
 };

@@ -2,18 +2,17 @@ var Sequelize = require('sequelize');
 
 module.exports = (api) => {
 
-    return api.mysql.define('token', {
+    return api.mysql.define('subject', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
         },
-        idUser: {
+        libelle: {
             type: Sequelize.STRING,
-            allowNull: false
         },
-        encryptedToken: {
-            type: Sequelize.STRING,
+        id_user: {
+            type: Sequelize.INTEGER,
         }
     });
 };

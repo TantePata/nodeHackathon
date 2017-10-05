@@ -14,8 +14,14 @@ module.exports = (api) => {
     });
 
     api.models = {
-        User: require('./User')(api),
+        Answer: require('./Answer')(api),
         Classe : require ('./Classe')(api),
+        Exercise: require('./Exercise')(api),
+        Lesson: require('./Lesson')(api),
+        Question: require('./Question')(api),
+        Subject: require('./Subject')(api),
+        User: require('./User')(api),
+        Video : require ('./Video')(api),
         Token : require ('./Token')(api)
     };
 
