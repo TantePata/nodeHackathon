@@ -4,8 +4,17 @@ module.exports = (api) => {
     router.get('/',
     api.actions.lessons.findAll);
 
+    router.get('/:idless/videos',
+        api.actions.videos.findAll);
+
+    router.get('/:idless/exercises',
+        api.actions.exercises.findAll);
+
+    router.get('/:idless/questions',
+        api.actions.questions.findAll);
+
     router.get('/:id',
-        api.actions.lessons.findOne);
+    api.actions.lessons.findOne);
 
     router.post('/',
     api.middlewares.bodyParser.json(),

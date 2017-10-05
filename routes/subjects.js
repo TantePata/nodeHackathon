@@ -5,7 +5,7 @@ module.exports = (api) => {
     api.actions.subjects.findAll);
 
     router.get('/:idSub/lesson',
-        api.actions.lessons.findBySubject);
+    api.actions.lessons.findBySubject);
 
     router.get('/:id',
     api.actions.subjects.findOne);

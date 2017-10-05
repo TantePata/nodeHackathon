@@ -4,6 +4,9 @@ module.exports = (api) => {
     router.get('/',
     api.actions.questions.findAll);
 
+    router.get('/:id/answers',
+        api.actions.answers.findAll);
+
     router.get('/:id',
     api.actions.questions.findOne);
 

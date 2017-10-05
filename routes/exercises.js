@@ -4,6 +4,10 @@ module.exports = (api) => {
     router.get('/',
     api.actions.exercises.findAll);
 
+
+    router.get('/:id/answers',
+    api.actions.answers.findAll);
+
     router.get('/:login',
     api.actions.exercises.findOne);
 
