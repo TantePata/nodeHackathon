@@ -1,15 +1,14 @@
 module.exports = (api) => {
 
-    const Exercise = api.models.Exercise;
+    const Lesson = api.models.Lesson;
 
     function create(req, res, next) {
-        //TODO a verifier
-        let exercice = Exercise.build( req.body );
 
-        exercice
+        let lesson = Lesson.build( req.body );
+        lesson
             .save()
             .then(function(anotherTask) {
-                return res.send(exercice);
+                return res.send(lesson);
             }).catch(function(error) {
 
                 return res.status(500).send(error);
@@ -19,7 +18,7 @@ module.exports = (api) => {
 
     function findAll(req, res, next) {
 
-        Exercise.findAll().then(function(anotherTask) {
+        Lesson.findAll().then(function(anotherTask) {
             if(anotherTask[0] == null){
                 return res.status(204).send(anotherTask)
             }
@@ -31,7 +30,7 @@ module.exports = (api) => {
 
     function findOne(req, res, next) {
 
-        Exercise.findAll({
+        Lesson.findAll({
             where: {
                 login: req.params.login
             }
@@ -47,7 +46,7 @@ module.exports = (api) => {
     }
 
     function update(req, res, next) {
-        Exercise
+        Lesson
             .find({ where: { login: req.params.login} })
             .then(function(user) {
                 // Check if record exists in db
@@ -66,7 +65,7 @@ module.exports = (api) => {
     }
 
     function destroy(req, res, next) {
-        Exercise.destroy({
+        Lesson.destroy({
             where: {
                 login: req.params.login
             }
@@ -78,7 +77,7 @@ module.exports = (api) => {
 
     }
 
-    function findExerciceForLesson(req, res, next) {
+    function findForsubject(req, res, next) {
 
     }
 
@@ -88,7 +87,6 @@ module.exports = (api) => {
         findAll,
         findOne,
         update,
-        destroy,
-        findProfile
+        destroy
     };
 };

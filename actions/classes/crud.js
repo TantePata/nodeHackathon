@@ -36,11 +36,7 @@ module.exports = (api) => {
     }
 
     return {
-        create,
         findAll,
         findOne,
-        update,
-        destroy,
-        findProfile
     };
 };

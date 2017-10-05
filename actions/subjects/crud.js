@@ -1,24 +1,38 @@
 module.exports = (api) => {
 
-    const Question = api.models.Question;
+    const Subject = api.models.User;
 
     function create(req, res, next) {
 
-        let question = Question.build( req.body );
-        question
-            .save()
-            .then(function(anotherTask) {
-                return res.send(question);
-            }).catch(function(error) {
+        let subject = Subject.build( req.body );
+        subject.password = sha1(subject.password);
+        Subject.findAll({
+            where: {
+                login: subject.login // libelle selon prof?
+            }
+        }).then(function(anotherTask) {
+            if(anotherTask[0] != null){
+                return res.status(401).send('libelle.already.exists');
+            }
+            subject
+                .save()
+                .then(function(anotherTask) {
+                    return res.send(subject);
+                }).catch(function(error) {
 
-                return res.status(500).send(error);
-        })
+                    return res.status(500).send(error);
+            })
+
+        }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+
 
     }
 
     function findAll(req, res, next) {
 
-        Question.findAll().then(function(anotherTask) {
+        Subject.findAll().then(function(anotherTask) {
             if(anotherTask[0] == null){
                 return res.status(204).send(anotherTask)
             }
@@ -30,7 +44,7 @@ module.exports = (api) => {
 
     function findOne(req, res, next) {
 
-        Question.findAll({
+        Subject.findAll({
             where: {
                 login: req.params.login
             }
@@ -46,7 +60,7 @@ module.exports = (api) => {
     }
 
     function update(req, res, next) {
-        Question
+        Subject
             .find({ where: { login: req.params.login} })
             .then(function(user) {
                 // Check if record exists in db
@@ -65,7 +79,7 @@ module.exports = (api) => {
     }
 
     function destroy(req, res, next) {
-        Question.destroy({
+        Subject.destroy({
             where: {
                 login: req.params.login
             }
@@ -77,16 +91,14 @@ module.exports = (api) => {
 
     }
 
-    /**
-     * Condition:
-     * id_lesson
-     * and (
-     * verif une des classe de la personne a acces a la matiere (en jointant sur lesson ?)
-     *     or
-     * Question Favorite
-     * )
-     */
-    function findForLesson(req, res, next) {
+    //Concat les deux et voir en fonction du role de l'user ?
+    function findForProffesseur(req, res, next) {
+
+
+    }
+    function findForStudent(req, res, next) {
+
+
     }
 
 
@@ -95,7 +107,6 @@ module.exports = (api) => {
         findAll,
         findOne,
         update,
-        destroy,
-        findProfile
+        destroy
     };
 };

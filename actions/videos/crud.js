@@ -86,7 +86,6 @@ module.exports = (api) => {
         findAll,
         findOne,
         update,
-        destroy,
-        findProfile
+        destroy
     };
 };
