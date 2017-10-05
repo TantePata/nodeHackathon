@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 module.exports = (api) => {
-    router.post('/',
+    router.get('/',
     api.actions.subjects.findAll);
 
     router.get('/:idSub/lesson',
@@ -9,6 +9,10 @@ module.exports = (api) => {
 
     router.get('/:id',
     api.actions.subjects.findOne);
+
+    router.post('/',
+    api.middlewares.bodyParser.json(),
+    api.actions.subjects.create);
 
     router.put('/:id',
     api.middlewares.bodyParser.json(),
