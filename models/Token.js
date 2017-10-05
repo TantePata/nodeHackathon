@@ -8,7 +8,11 @@ module.exports = (api) => {
             autoIncrement: true,
             primaryKey: true
         },
-        idUser: {
+        id_user: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        role: {
             type: Sequelize.STRING,
             allowNull: false
         },

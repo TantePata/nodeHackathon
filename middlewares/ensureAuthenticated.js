@@ -25,7 +25,8 @@ module.exports = (api) => {
                     return res.status(401).send('authentication.expired');
                 }
 
-                req.idUser = find.idUser;
+                req.id_user = find.id_user;
+                req.role = find.role;
                 return next();
             });
 

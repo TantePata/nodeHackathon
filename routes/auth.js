@@ -5,10 +5,6 @@ module.exports = (api) => {
         api.middlewares.bodyParser.json(),
         api.actions.auth.login);
 
-    router.post('/loginUser',
-        api.middlewares.bodyParser.json(),
-        api.actions.auth.loginUser);
-
     router.post('/logout',
         api.middlewares.ensureAuthenticated,
         api.actions.auth.logout);

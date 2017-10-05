@@ -1,18 +1,13 @@
 {
-  "name": "linkalife",
+  "name": "nodeHAckathon",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.3",
-    "geocoder": "^0.2.3",
     "jsonwebtoken": "^7.4.1",
     "mysql": "^2.13.0",
     "nodemon": "^1.11.0",

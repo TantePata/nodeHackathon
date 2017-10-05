@@ -96,40 +96,12 @@ module.exports = (api) => {
 
     }
 
-    function findProfile(req, res, next) {
-
-        User.findAll({
-            where: {
-                login: req.params.login
-            },
-            include: [
-                {
-                    model: ProfileUser,
-                    required:true,
-                    include:[
-                        { model: Profile, required: true}
-                    ]
-                },
-
-            ],
-        }).then(function(anotherTask) {
-            if(anotherTask[0] == null){
-                return res.status(204).send(anotherTask)
-            }
-            return res.send(anotherTask);
-        }).catch(function(error) {
-            return res.status(500).send(error)
-        });
-
-    }
-
 
     return {
         create,
         findAll,
         findOne,
         update,
-        destroy,
-        findProfile
+        destroy
     };
 };

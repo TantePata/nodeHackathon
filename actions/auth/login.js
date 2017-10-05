@@ -2,7 +2,7 @@ const sha1 = require('sha1');
 const jwt = require('jsonwebtoken');
 
 module.exports = (api) => {
-    const User = api.models.Employee;
+    const User = api.models.User;
     const Token = api.models.Token;
 
     return function login(req, res, next) {
@@ -10,7 +10,7 @@ module.exports = (api) => {
         let user = User.build( req.body );
         User.findOne({
             where: {
-                login: user.login,
+                mail: user.mail,
                 password : sha1(user.password)
             }
         }).then(function(user) {
@@ -22,7 +22,8 @@ module.exports = (api) => {
             // #3 starting token creation.
             Token.findOne({
                 where: {
-                    idUser: user.login,
+                    id_user: user.id,
+                    role: user.role,
                     createdAt: {
                         $lt: new Date(),
                         $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
@@ -31,7 +32,8 @@ module.exports = (api) => {
             }).then(function(find) {
                 if(!find){
                     let token = Token.build();
-                    token.idUser = user.login.toString();
+                    token.id_user = user.id.toString();
+                    token.role = user.role.toString();
                     // #4 persist the token into the database.
                     token.save()
                         .then(function (token) {
