@@ -4,7 +4,7 @@ module.exports = (api) => {
     return function logout(req, res, next) {
         Token.destroy({
             where: {
-                idUser: req.idUser
+                id_user: req.id_user
             }
         })
         .then(function(result){
