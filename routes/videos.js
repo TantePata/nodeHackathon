@@ -17,6 +17,7 @@ module.exports = (api) => {
         api.actions.answers.createVideoAnswer);
 
     router.post('/',
+        api.middlewares.ensureAuthenticated,
         api.middlewares.bodyParser.json(),
         api.actions.videos.create);
 

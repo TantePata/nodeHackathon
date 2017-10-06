@@ -4,6 +4,8 @@ module.exports = (api) => {
     function create(req, res, next) {
 
         let video = Video.build( req.body );
+
+        video.id_user = req.id_user;
         video
         .save()
         .then(function(anotherTask) {

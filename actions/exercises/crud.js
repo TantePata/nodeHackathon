@@ -6,6 +6,7 @@ module.exports = (api) => {
         //TODO a verifier
         let exercice = Exercise.build( req.body );
 
+        exercice.id_user = req.id_user;
         exercice
             .save()
             .then(function(anotherTask) {

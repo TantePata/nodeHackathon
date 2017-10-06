@@ -5,7 +5,7 @@ module.exports = (api) => {
     function create(req, res, next) {
 
         let question = Question.build( req.body );
-        question.is_user = req.id_user;
+        question.id_user = req.id_user;
         question
             .save()
             .then(function(anotherTask) {
