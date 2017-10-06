@@ -17,6 +17,9 @@ module.exports = (api) => {
         id_user: {
             type: Sequelize.STRING,
         },
+        id_lesson: {
+            type: Sequelize.STRING,
+        },
         link: {
             type: Sequelize.STRING,
         },
