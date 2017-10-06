@@ -57,25 +57,25 @@ module.exports = (api) => {
 
     function findForStudent(req, res, next) {
         api.mysql.query("SELECT Lessons.id, Lessons.id_subject, Lessons.libelle, count(DISTINCT Videos.id) as nbVideo, count(DISTINCT Questions.id) as nbQuestion, count(DISTINCT Exercises.id) as nbExercise FROM Lessons\n" +
-            "LEFT JOIN Videos ON (Videos.id_lesson = Lessons.id\n" +
-            "\tAND Videos.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
-            "\t\tWHERE UsersClasses.id_classe IN\n" +
-            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
-            "\t\tGROUP BY UsersClasses.id_user)\n" +
-            "\tOR (Videos.id_lesson = Lessons.id AND Videos.favorite = 1))\n" +
-            "LEFT JOIN Questions ON (Questions.id_lesson = Lessons.id\n" +
-            "\tAND Questions.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
-            "\t\tWHERE UsersClasses.id_classe IN\n" +
-            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
-            "\t\tGROUP BY UsersClasses.id_user)\n" +
-            "\tOR (Videos.id_lesson = Lessons.id AND Questions.favorite = 1))\n" +
-            "LEFT JOIN Exercises ON (Exercises.id_lesson = Lessons.id\n" +
-            "\tAND Exercises.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
-            "\t\tWHERE UsersClasses.id_classe IN\n" +
-            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
-            "\t\tGROUP BY UsersClasses.id_user)\n" +
-            "\tOR (Videos.id_lesson = Lessons.id AND Exercises.favorite = 1))\n" +
-            "WHERE id_subject = 1\n" +
+            "  LEFT JOIN Videos ON (Videos.id_lesson = Lessons.id\n" +
+            "                       AND Videos.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "  WHERE UsersClasses.id_classe IN\n" +
+            "        (SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = " + req.id_user + ")\n" +
+            "  GROUP BY UsersClasses.id_user)\n" +
+            "                       OR (Videos.id_lesson = Lessons.id AND Videos.favorite = 1))\n" +
+            "  LEFT JOIN Questions ON (Questions.id_lesson = Lessons.id\n" +
+            "                          AND Questions.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "  WHERE UsersClasses.id_classe IN\n" +
+            "        (SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = " + req.id_user + ")\n" +
+            "  GROUP BY UsersClasses.id_user)\n" +
+            "                          OR (Videos.id_lesson = Lessons.id AND Questions.favorite = 1))\n" +
+            "  LEFT JOIN Exercises ON (Exercises.id_lesson = Lessons.id\n" +
+            "                          AND Exercises.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "  WHERE UsersClasses.id_classe IN\n" +
+            "        (SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = " + req.id_user + ")\n" +
+            "  GROUP BY UsersClasses.id_user)\n" +
+            "                          OR (Videos.id_lesson = Lessons.id AND Exercises.favorite = 1))\n" +
+            "WHERE id_subject = " + req.params.idSub + "\n" +
             "GROUP BY Lessons.id, Lessons.id_subject, Lessons.libelle;")
             .then(function(anotherTask) {
                 if(anotherTask[0] == null){

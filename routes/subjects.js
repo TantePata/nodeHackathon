@@ -6,6 +6,7 @@ module.exports = (api) => {
     api.actions.subjects.findSubject);
 
     router.get('/:idSub/lesson',
+    api.middlewares.ensureAuthenticated,
     api.actions.lessons.findBySubject);
 
     router.get('/:id',
