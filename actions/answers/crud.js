@@ -130,7 +130,7 @@ module.exports = (api) => {
                 id: req.params.id
             }
         }).then(function() {
-            return res.send();
+            return res.sendStatus(200);
         }).catch(function(error) {
             return res.status(500).send(error)
         });
