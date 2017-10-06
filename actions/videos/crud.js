@@ -29,6 +29,31 @@ module.exports = (api) => {
         });
     }
 
+    //Concat les deux et voir en fonction du role de l'user ?
+    function findVideos(req, res, next) {
+        if (req.role === "student"){
+            findAllByUserId(req, res, next);
+        }else {
+            findForProffesseur(req, res, next);
+        }
+
+    }
+    function findForProffesseur(req, res, next) {
+
+        Video.findAll({
+            where: {
+                id_user: req.user_id
+            }
+        }).then(function(anotherTask) {
+            if(anotherTask[0] == null){
+                return res.status(204).send(anotherTask)
+            }
+            return res.send(anotherTask);
+        }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+    }
+
     function findAllByUserId(req, res, next) {
 
         api.mysql.query("SELECT Videos.*, Users.name, Users.surname, Users.role FROM Videos\n" +
@@ -109,6 +134,7 @@ module.exports = (api) => {
         findOne,
         update,
         findAllByUserId,
+        findVideos,
         destroy
     };
 };

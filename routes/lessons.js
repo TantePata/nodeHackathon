@@ -6,7 +6,7 @@ module.exports = (api) => {
 
     router.get('/:idLess/videos',
         api.middlewares.ensureAuthenticated,
-        api.actions.videos.findAllByUserId);
+        api.actions.videos.findVideos);
 
     router.get('/:idLess/exercises',
         api.middlewares.ensureAuthenticated,
@@ -14,7 +14,7 @@ module.exports = (api) => {
 
     router.get('/:idLess/questions',
         api.middlewares.ensureAuthenticated,
-        api.actions.questions.findAllByUserId);
+        api.actions.questions.findQuestions);
 
     router.get('/:id',
     api.actions.lessons.findOne);
