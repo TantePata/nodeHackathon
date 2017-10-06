@@ -10,7 +10,7 @@ module.exports = (api) => {
 
     router.get('/:idLess/exercises',
         api.middlewares.ensureAuthenticated,
-        api.actions.exercises.findAllByUserId);
+        api.actions.exercises.findExercises);
 
     router.get('/:idLess/questions',
         api.middlewares.ensureAuthenticated,

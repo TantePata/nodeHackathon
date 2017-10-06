@@ -40,16 +40,15 @@ module.exports = (api) => {
     }
     function findForProffesseur(req, res, next) {
 
-        Video.findAll({
-            where: {
-                id_user: req.user_id
-            }
-        }).then(function(anotherTask) {
-            if(anotherTask[0] == null){
-                return res.status(204).send(anotherTask)
-            }
-            return res.send(anotherTask);
-        }).catch(function(error) {
+        api.mysql.query("SELECT Videos.*, Users.name, Users.surname FROM Videos\n" +
+            "    LEFT JOIN Users ON Users.id = Videos.id_user\n" +
+            "    WHERE Videos.id_lesson =" + req.params.idLess)
+            .then(function(anotherTask) {
+                if(anotherTask[0] == null){
+                    return res.status(204).send(anotherTask)
+                }
+                return res.send(anotherTask[0]);
+            }).catch(function(error) {
             return res.status(500).send(error)
         });
     }

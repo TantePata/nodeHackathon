@@ -30,6 +30,31 @@ module.exports = (api) => {
         });
     }
 
+    //Concat les deux et voir en fonction du role de l'user ?
+    function findExercises(req, res, next) {
+        if (req.role === "student"){
+            findAllByUserId(req, res, next);
+        }else {
+            findForProffesseur(req, res, next);
+        }
+
+    }
+    function findForProffesseur(req, res, next) {
+
+
+        api.mysql.query("SELECT Exercises.*, Users.name, Users.surname FROM Exercises\n" +
+            "    LEFT JOIN Users ON Users.id = Exercises.id_user\n" +
+            "    WHERE Exercises.id_lesson =" + req.params.idLess)
+            .then(function(anotherTask) {
+                if(anotherTask[0] == null){
+                    return res.status(204).send(anotherTask)
+                }
+                return res.send(anotherTask[0]);
+            }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+    }
+
 
     function findAllByUserId(req, res, next) {
 
@@ -104,6 +129,7 @@ module.exports = (api) => {
         create,
         findAll,
         findAllByUserId,
+        findExercises,
         findOne,
         update,
         destroy
