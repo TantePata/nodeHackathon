@@ -5,6 +5,7 @@ module.exports = (api) => {
     function create(req, res, next) {
 
         let question = Question.build( req.body );
+        question.is_user = req.id_user;
         question
             .save()
             .then(function(anotherTask) {
@@ -98,17 +99,6 @@ module.exports = (api) => {
 
     }
 
-    /**
-     * Condition:
-     * id_lesson
-     * and (
-     * verif une des classes de la personne a acces a la matiere (en jointant sur lessons ?)
-     *     or
-     * Question Favorite
-     * )
-     */
-    function findForLesson(req, res, next) {
-    }
 
 
     return {

@@ -16,6 +16,7 @@ module.exports = (api) => {
         api.actions.answers.createQuestionAnswer);
 
     router.post('/',
+        api.middlewares.ensureAuthenticated,
     api.middlewares.bodyParser.json(),
     api.actions.questions.create);
 
