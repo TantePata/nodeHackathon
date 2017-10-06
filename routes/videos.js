@@ -5,14 +5,20 @@ module.exports = (api) => {
     api.actions.videos.findAll);
 
     router.get('/:id/answers',
-        api.actions.answers.findAll);
+        api.actions.answers.findAllForVideos);
 
     router.get('/:id',
     api.actions.videos.findOne);
 
+
+    router.post('/:id/answer',
+        api.middlewares.ensureAuthenticated,
+        api.middlewares.bodyParser.json(),
+        api.actions.answers.createVideoAnswer);
+
     router.post('/',
-    api.middlewares.bodyParser.json(),
-    api.actions.videos.create);
+        api.middlewares.bodyParser.json(),
+        api.actions.videos.create);
 
     router.put('/:id',
     api.middlewares.bodyParser.json(),

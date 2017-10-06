@@ -4,12 +4,16 @@ module.exports = (api) => {
     router.get('/',
     api.actions.exercises.findAll);
 
-
     router.get('/:id/answers',
-    api.actions.answers.findAll);
+        api.actions.answers.findAllForExercises);
 
     router.get('/:login',
     api.actions.exercises.findOne);
+
+    router.post('/:id/answer',
+        api.middlewares.ensureAuthenticated,
+        api.middlewares.bodyParser.json(),
+        api.actions.answers.createExerciseAnswer);
 
     router.post('/',
     api.middlewares.bodyParser.json(),

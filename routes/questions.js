@@ -5,10 +5,15 @@ module.exports = (api) => {
     api.actions.questions.findAll);
 
     router.get('/:id/answers',
-        api.actions.answers.findAll);
+        api.actions.answers.findAllForQuestions);
 
     router.get('/:id',
     api.actions.questions.findOne);
+
+    router.post('/:id/answer',
+        api.middlewares.ensureAuthenticated,
+        api.middlewares.bodyParser.json(),
+        api.actions.answers.createQuestionAnswer);
 
     router.post('/',
     api.middlewares.bodyParser.json(),

@@ -2,7 +2,8 @@ const router = require('express').Router();
 
 module.exports = (api) => {
     router.get('/',
-    api.actions.subjects.findAll);
+    api.middlewares.ensureAuthenticated,
+    api.actions.subjects.findSubject);
 
     router.get('/:idSub/lesson',
     api.actions.lessons.findBySubject);

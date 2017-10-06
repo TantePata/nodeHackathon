@@ -16,6 +16,33 @@ module.exports = (api) => {
 
     }
 
+    function createAnswer(req, res, next, parent) {
+
+        let answer = Answer.build( req.body );
+        answer.id_parent = req.params.id;
+        answer.id_user = req.id_user;
+        answer.type_parent = parent;
+        answer
+            .save()
+            .then(function(anotherTask) {
+                return res.send(answer);
+            }).catch(function(error) {
+
+            return res.status(500).send(error);
+        })
+
+    }
+
+    function createQuestionAnswer(req, res, next) {
+        createAnswer(req, res, next, "Questions")
+    }
+    function createExerciseAnswer(req, res, next) {
+        createAnswer(req, res, next, "Exercises")
+    }
+    function createVideoAnswer(req, res, next) {
+        createAnswer(req, res, next, "Videos")
+    }
+
     function findAll(req, res, next) {
 
         Answer.findAll().then(function(anotherTask) {
@@ -33,6 +60,33 @@ module.exports = (api) => {
         Answer.findAll({
             where: {
                 id: req.params.id
+            }
+        }).then(function(anotherTask) {
+            if(anotherTask[0] == null){
+                return res.status(204).send(anotherTask)
+            }
+            return res.send(anotherTask);
+        }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+
+    }
+    function findAllForQuestions(req, res, next) {
+        findallForParent(req, res, next, "Questions")
+    }
+    function findAllForExercises(req, res, next) {
+        findallForParent(req, res, next, "Exercises")
+    }
+    function findAllForVideos(req, res, next) {
+        findallForParent(req, res, next, "Videos")
+    }
+
+    function findallForParent(req, res, next, parent) {
+
+        Answer.findAll({
+            where: {
+                id_parent: req.params.id,
+                type_parent: parent
             }
         }).then(function(anotherTask) {
             if(anotherTask[0] == null){
@@ -91,7 +145,13 @@ module.exports = (api) => {
 
     return {
         create,
+        createQuestionAnswer,
+        createExerciseAnswer,
+        createVideoAnswer,
         findAll,
+        findAllForVideos,
+        findAllForExercises,
+        findAllForQuestions,
         findOne,
         update,
         destroy

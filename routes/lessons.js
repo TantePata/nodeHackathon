@@ -4,14 +4,17 @@ module.exports = (api) => {
     router.get('/',
     api.actions.lessons.findAll);
 
-    router.get('/:idless/videos',
-        api.actions.videos.findAll);
+    router.get('/:idLess/videos',
+        api.middlewares.ensureAuthenticated,
+        api.actions.videos.findAllByUserId);
 
-    router.get('/:idless/exercises',
-        api.actions.exercises.findAll);
+    router.get('/:idLess/exercises',
+        api.middlewares.ensureAuthenticated,
+        api.actions.exercises.findAllByUserId);
 
-    router.get('/:idless/questions',
-        api.actions.questions.findAll);
+    router.get('/:idLess/questions',
+        api.middlewares.ensureAuthenticated,
+        api.actions.questions.findAllByUserId);
 
     router.get('/:id',
     api.actions.lessons.findOne);

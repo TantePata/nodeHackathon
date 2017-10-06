@@ -29,20 +29,64 @@ module.exports = (api) => {
     }
 
     function findBySubject(req, res, next) {
+        if (req.role === "student"){
+            findForStudent(req, res, next);
+        }else {
+            findForProffesseur(req, res, next);
+        }
 
-        Lesson.findAll({
-            where: {
-                id_subject: req.params.idSub
-            }
-        }).then(function(anotherTask) {
-            if(anotherTask[0] == null){
-                return res.status(204).send(anotherTask)
-            }
-            return res.send(anotherTask);
-        }).catch(function(error) {
+    }
+
+    function findForProffesseur(req, res, next) {
+        api.mysql.query("SELECT Lessons.id, Lessons.id_subject, Lessons.libelle, count(DISTINCT Videos.id) as nbVideo, count(DISTINCT Questions.id) as nbQuestion, count(DISTINCT Exercises.id) as nbExercise FROM Lessons\n" +
+            "LEFT JOIN Videos ON Videos.id_lesson = Lessons.id\n" +
+            "LEFT JOIN Questions ON Questions.id_lesson = Lessons.id\n" +
+            "LEFT JOIN Exercises ON Exercises.id_lesson = Lessons.id\n" +
+            "WHERE id_subject = 1\n" +
+            "GROUP BY Lessons.id, Lessons.id_subject, Lessons.libelle;")
+            .then(function(anotherTask) {
+                if(anotherTask[0] == null){
+                    return res.status(204).send(anotherTask)
+                }
+                return res.send(anotherTask[0]);
+            }).catch(function(error) {
+            return res.status(500).send(error)
+        });
+
+    }
+
+    function findForStudent(req, res, next) {
+        api.mysql.query("SELECT Lessons.id, Lessons.id_subject, Lessons.libelle, count(DISTINCT Videos.id) as nbVideo, count(DISTINCT Questions.id) as nbQuestion, count(DISTINCT Exercises.id) as nbExercise FROM Lessons\n" +
+            "LEFT JOIN Videos ON (Videos.id_lesson = Lessons.id\n" +
+            "\tAND Videos.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "\t\tWHERE UsersClasses.id_classe IN\n" +
+            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
+            "\t\tGROUP BY UsersClasses.id_user)\n" +
+            "\tOR (Videos.id_lesson = Lessons.id AND Videos.favorite = 1))\n" +
+            "LEFT JOIN Questions ON (Questions.id_lesson = Lessons.id\n" +
+            "\tAND Questions.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "\t\tWHERE UsersClasses.id_classe IN\n" +
+            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
+            "\t\tGROUP BY UsersClasses.id_user)\n" +
+            "\tOR (Videos.id_lesson = Lessons.id AND Questions.favorite = 1))\n" +
+            "LEFT JOIN Exercises ON (Exercises.id_lesson = Lessons.id\n" +
+            "\tAND Exercises.id_user IN (SELECT UsersClasses.id_user FROM UsersClasses\n" +
+            "\t\tWHERE UsersClasses.id_classe IN\n" +
+            "\t\t(SELECT UsersClasses.id_classe FROM UsersClasses WHERE UsersClasses.id_user = 3)\n" +
+            "\t\tGROUP BY UsersClasses.id_user)\n" +
+            "\tOR (Videos.id_lesson = Lessons.id AND Exercises.favorite = 1))\n" +
+            "WHERE id_subject = 1\n" +
+            "GROUP BY Lessons.id, Lessons.id_subject, Lessons.libelle;")
+            .then(function(anotherTask) {
+                if(anotherTask[0] == null){
+                    return res.status(204).send(anotherTask)
+                }
+                return res.send(anotherTask[0]);
+            }).catch(function(error) {
             return res.status(500).send(error)
         });
     }
+
 
     function findOne(req, res, next) {
 
