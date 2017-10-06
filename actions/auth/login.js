@@ -57,7 +57,7 @@ module.exports = (api) => {
                                             token
                                                 .updateAttributes({encryptedToken : encryptedToken})
                                                 .then(function (updated) {
-                                                    return res.send({"encryptedToken" : encryptedToken});
+                                                    return res.send({"encryptedToken" : encryptedToken, "role": token.role});
                                                 }).catch(function(error) {
                                                 return res.status(500).send(error)
                                             });
@@ -66,7 +66,7 @@ module.exports = (api) => {
                             );
                         });
                 }
-                return res.send({"encryptedToken" : find.encryptedToken});
+                return res.send({"encryptedToken" : find.encryptedToken, "role": user.role.toString()});
 
             });
         });

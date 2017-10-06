@@ -11,7 +11,7 @@ module.exports = (api) => {
     api.actions.videos.findOne);
 
 
-    router.post('/:id/answer',
+    router.post('/:id/answers',
         api.middlewares.ensureAuthenticated,
         api.middlewares.bodyParser.json(),
         api.actions.answers.createVideoAnswer);

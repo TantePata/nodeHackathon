@@ -10,7 +10,7 @@ module.exports = (api) => {
     router.get('/:id',
     api.actions.questions.findOne);
 
-    router.post('/:id/answer',
+    router.post('/:id/answers',
         api.middlewares.ensureAuthenticated,
         api.middlewares.bodyParser.json(),
         api.actions.answers.createQuestionAnswer);

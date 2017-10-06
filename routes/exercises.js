@@ -10,7 +10,7 @@ module.exports = (api) => {
     router.get('/:login',
     api.actions.exercises.findOne);
 
-    router.post('/:id/answer',
+    router.post('/:id/answers',
         api.middlewares.ensureAuthenticated,
         api.middlewares.bodyParser.json(),
         api.actions.answers.createExerciseAnswer);
