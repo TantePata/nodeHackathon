@@ -81,22 +81,28 @@ module.exports = (api) => {
         findallForParent(req, res, next, "Videos")
     }
 
+    /**
+     *
+     id_parent: req.params.id,
+     type_parent: parent
+     * @param req
+     * @param res
+     * @param next
+     * @param parent
+     */
     function findallForParent(req, res, next, parent) {
 
-        Answer.findAll({
-            where: {
-                id_parent: req.params.id,
-                type_parent: parent
-            }
-        }).then(function(anotherTask) {
-            if(anotherTask[0] == null){
-                return res.status(204).send(anotherTask)
-            }
-            return res.send(anotherTask);
-        }).catch(function(error) {
+        api.mysql.query("SELECT Answers.* , Users.name, Users.surname FROM Answers\n" +
+            " LEFT JOIN Users ON Users.id = Answers.id_user\n" +
+            "WHERE Answers.id_parent = " + req.params.id + " AND Answers.type_parent = '" + parent + "'")
+            .then(function(anotherTask) {
+                if(anotherTask[0] == null){
+                    return res.status(204).send(anotherTask)
+                }
+                return res.send(anotherTask[0]);
+            }).catch(function(error) {
             return res.status(500).send(error)
         });
-
     }
 
     function update(req, res, next) {
